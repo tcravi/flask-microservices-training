@@ -1,33 +1,32 @@
 from flask import request
 from flask_restful import Resource
-from ..models.user import User
 from ..database import get_db_connection, close_db_connection, commit_and_close_db_connection
-from ..database import user_db
-from ..schemas.user_schema import UserSchema
-from ..exceptions import InvalidUserPayload
-#from app import flask_bcrypt
+from ..database import address_db
+from ..schemas.address_schema import AddressSchema
+from ..exceptions import InvalidAddressPayload
+from ..models.address import Address
 
-user_schema = UserSchema()
+address_schema = AddressSchema()
 
-class UsersApi(Resource):
+class AddressesApi(Resource):
 
 	def get(self):
 		conn = get_db_connection()
-		users = user_db.get_users(conn)
+		addresses = address_db.get_addresses(conn)
 		close_db_connection(conn)
-		return users
+		return addresses
 
 	def post(self):
-		errors = user_schema.validate(request.json)
+		errors = address_schema.validate(request.json)
 		print("errors: "+str(errors))
 		if errors:
-			raise InvalidUserPayload(errors, 400)
+			raise InvalidAddressPayload(errors, 400)
 		#user_dict['password'] = flask_bcrypt.generate_password_hash(user_dict['password'])
 		conn = get_db_connection()
-		user_db.create_users(conn, User.from_json(request.json))
-		users = user_db.get_users(conn)
+		address_db.create_address(conn, Address.from_json(request.json))
+		addresses = address_db.get_addressesa(conn)
 		commit_and_close_db_connection(conn)
-		return users, 201
+		return addresses, 201
 
 	def put(self):
 		return {'message': 'Hello PUT'}

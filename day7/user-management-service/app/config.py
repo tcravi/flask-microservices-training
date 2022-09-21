@@ -8,6 +8,7 @@ class Config(object):
     TESTING = False
     JWT_SECRET_KEY = 'this-is-a-complicated-secret'
     JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(seconds=30)
+    JWT_REFRESH_TOKEN_EXPIRES = datetime.timedelta(days=1)
 
 class ProductionConfig(Config):
     DATABASE_URI = 'user-management-prod.db'
