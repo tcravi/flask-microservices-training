@@ -2,12 +2,13 @@ import os
 import datetime
 
 _deployed_env_ = os.environ.get("FLASK_ENV", default=None)
+print(f"Environment: [{_deployed_env_}]")
 
 
 class Config(object):
     TESTING = False
     JWT_SECRET_KEY = 'this-is-a-complicated-secret'
-    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(seconds=30)
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(days=1)
 
 class ProductionConfig(Config):
     DATABASE_URI = 'user-management-prod.db'
