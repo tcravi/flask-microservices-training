@@ -33,7 +33,7 @@ class AuthApi(Resource):
 
 		access_token = create_access_token(identity=email, additional_claims=additional_claims)
 		refresh_token = create_refresh_token(identity=email)
-		return {"access_token":access_token, "refresh_token": refresh_token}
+		return {"access_token":access_token, "refresh_token": refresh_token, "user_id": user.id}
 
 
 # We are using the `refresh=True` options in jwt_required to only allow
